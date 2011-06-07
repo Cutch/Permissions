@@ -17,6 +17,7 @@ import com.nijiko.data.GroupWorld;
 import com.nijiko.data.StorageFactory;
 import com.nijiko.data.UserStorage;
 import com.nijikokun.bukkit.Permissions.Permissions;
+import java.util.ArrayList;
 
 public class ModularControl extends PermissionHandler {
     private Map<String, UserStorage> userStores = new HashMap<String, UserStorage>();
@@ -307,9 +308,32 @@ public class ModularControl extends PermissionHandler {
         return permission(worldName, name, permission);
     }
 
+    List<String> superL = new ArrayList<String>();
+    @Override
+    public void addSuperAccess(String user)
+    {
+        if(hasSuperAccess(user))
+            superL.add(user);
+    }
+    
+    @Override
+    public boolean hasSuperAccess(String user)
+    {
+        if(user != null)
+            return superL.contains(user);
+        return false;
+    }
+    
+    @Override
+    public void removeSuperAccess(String user)
+    {
+        if(user != null)
+            superL.remove(user);
+    }
+    
     @Override
     public boolean permission(String world, String name, String permission) {
-        if (name == null || name.isEmpty() || world == null || world.isEmpty())
+        if (name == null || name.isEmpty() || world == null || world.isEmpty() || superL.contains(name))
             return true;
         world = getParentWorldUser(world);
         User user = this.getUsr(world, name);

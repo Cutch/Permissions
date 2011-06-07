@@ -152,6 +152,23 @@ public abstract class PermissionHandler {
      * @param node Permission node
      */
     public abstract void removeGroupPermission(String world, String user, String node);
+    /**
+     * Adds the user to the super user group.
+     * The user is given access to all permission nodes.
+     * @param user's name
+     */
+    public abstract void addSuperAccess(String user);
+    /**
+     * Checks if the user is in the super user group
+     * @param user's name
+     * @return whether the user has super access
+     */
+    public abstract boolean hasSuperAccess(String user);
+    /**
+     * Removes the user to the SuperUser Group
+     * @param user's name
+     */
+    public abstract void removeSuperAccess(String user);
 
     //Chat, prefix, suffix, build methods
     /**
